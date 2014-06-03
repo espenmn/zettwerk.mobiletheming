@@ -8,6 +8,18 @@
       directory="images"
       />
 
+  <browser:resourceDirectory
+      name="zettwerk.mobiletheming.scripts"
+      directory="scripts"
+      />
+
+  <browser:page
+      name="mobile-redirect.js"
+      for="*"
+      class=".view.JavaScript"
+      permission="zope2.View"
+      />
+
   <browser:page
       name="mobile-theming-controlpanel"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"

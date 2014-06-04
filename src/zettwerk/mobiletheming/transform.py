@@ -18,9 +18,8 @@ class MobileThemeTransform(ThemeTransform):
 
     order = 8850
 
-    def transformIterable(self, result, encoding):
-        """Apply the transform if required
-        """
+    def _getActive(self):
+        """ check if the mobile theming for this url is active """
 
         active = False
         registry = getUtility(IRegistry)
@@ -33,15 +32,24 @@ class MobileThemeTransform(ThemeTransform):
             'zettwerk.mobiletheming.interfaces.IMobileThemingSettings' \
                 '.hostnames'
         ]
-        themename = registry[
-            'zettwerk.mobiletheming.interfaces.IMobileThemingSettings' \
-                '.themename'
-        ]
         if hostnames:
             for hostname in hostnames or ():
                 if host == hostname or \
                    hostname == "http://%s" % (host):
                     active = True
+
+        return active
+
+    def transformIterable(self, result, encoding):
+        """Apply the transform if required
+        """
+        active = self._getActive()
+
+        registry = getUtility(IRegistry)
+        themename = registry[
+            'zettwerk.mobiletheming.interfaces.IMobileThemingSettings' \
+                '.themename'
+        ]
 
         availableThemes = getAvailableThemes()
         mobile = None
@@ -98,7 +106,6 @@ class MobileThemeTransform(ThemeTransform):
                                         cache)
 
         transformed = transform(result.tree, **params)
-        error_log = transform.error_log
         if transformed is not None:
             # Transformed worked, swap content with result
             result.tree = transformed

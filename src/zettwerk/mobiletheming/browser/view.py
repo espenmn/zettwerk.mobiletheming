@@ -1,5 +1,6 @@
 from Products.Five.browser import BrowserView
 from zope.component import getUtility
+from zope.component import getMultiAdapter
 from plone.registry.interfaces import IRegistry
 from urlparse import urlparse
 
@@ -11,17 +12,26 @@ class JavaScript(BrowserView):
         self.registry = getUtility(IRegistry)
         self.request.response.setHeader("Content-type", "text/javascript")
 
-        return """\
+        ## only return the redirect stuff, if the mobile theming
+        ## is _not_ active for this url
+        active = getMultiAdapter((request.get('PUBLISHED', None), request),
+                                 name='zettwerk_mobiletheming_transform') \
+            ._getActive()
+
+        hostname = self.hostname
+        if not active and hostname:
+            return """\
             var mobile_domain = "%(hostname)s";
             var ipad = "%(ipad)s";
             var other_tablets = "%(tablets)s";
             document.write(unescape("%%3Cscript src='/++resource++zettwerk.mobiletheming.scripts/me.redirect.min.js' type='text/javascript'%%3E%%3C/script%%3E"));
 
             """ % {
-                'hostname': self.hostname,
+                'hostname': hostname,
                 'ipad': self.ipad,
                 'tablets': self.tablets,
             }
+        return ''
 
     @property
     def hostname(self):
@@ -30,9 +40,26 @@ class JavaScript(BrowserView):
             'zettwerk.mobiletheming.interfaces.IMobileThemingSettings' \
                 '.hostnames'
         ]
-        url = hostnames[0] or 'mylocalhost'
-        o = urlparse(url)
-        return o.hostname
+
+        if not hostnames:
+            return ''
+
+        first = hostnames[0]
+        parts = urlparse(first)
+
+        ## two cases:
+        ## 1. no rewritten url with port and plone instance
+        ## 2. rewritten url without plone instance
+        ## for both cases, no protocol (http/s) is needed
+        if parts.port:
+            ## there is a port, so append the portal id
+            return '%s:%s/%s' % (
+                parts.hostname,
+                parts.port,
+                self.context.portal_url.getPortalObject().getId()
+            )
+        else:
+            return parts.hostname
 
     @property
     def tablets(self):

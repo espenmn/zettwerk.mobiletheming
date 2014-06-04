@@ -1,7 +1,6 @@
 from setuptools import setup, find_packages
-import os
 
-version = '1.0'
+version = '0.1'
 
 long_description = (
     open('README.txt').read()
@@ -29,8 +28,8 @@ setup(name='zettwerk.mobiletheming',
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
       keywords='mobile',
-      author='',
-      author_email='',
+      author='zettwerk',
+      author_email='jk@zettwerk.com',
       url='https://github.com/collective/zettwerk.mobiletheming',
       license='gpl',
       packages=find_packages('src'),

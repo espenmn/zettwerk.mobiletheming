@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from setuptools import setup, find_packages
 
 version = '0.1'
@@ -28,7 +29,7 @@ setup(name='zettwerk.mobiletheming',
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
       keywords='mobile',
-      author='zettwerk',
+      author='Jörg Kubaile / zettwerk GmbH',
       author_email='jk@zettwerk.com',
       url='https://github.com/collective/zettwerk.mobiletheming',
       license='gpl',

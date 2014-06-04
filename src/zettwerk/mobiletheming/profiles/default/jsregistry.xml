@@ -4,7 +4,7 @@
   <javascript id="mobile-redirect.js"
  	      cacheable="True" compression="safe" cookable="True"
  	      enabled="True"
-              expression="python: 'http://www' in (request.get('ACTUAL_URL'))"
+              expression=""
               inline="False"/>
 
 </object>

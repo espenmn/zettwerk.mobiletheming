@@ -21,3 +21,23 @@ There is also some settings for "redirecting urls", it works like this:
 4) You can choose if you want to redirect iPads and tablets, too.
 
 See this example with the zettwerk.mobile theme: https://www.youtube.com/watch?v=Q2ID86XkiQQ
+
+
+Generic Setup
+=============
+
+This product also provides a GenericSetup extension for integrators to set these settings via a xml profile file. Place the file "mobiletheming.xml" in your (default) generic setup profile and change it as you need. You can also export your current settings via portal_setup -> Export. The export step is called "Mobiletheming Settings".
+
+
+
+Example content, taken from `zettwerk.mobile <https://github.com/collective/zettwerk.mobile/tree/master/zettwerk/mobile/profiles/default/mobiletheming.xml>`_::
+
+  <?xml version="1.0"?>
+  <settings>
+    <themename>zettwerk.mobile</themename>
+    <hostnames>
+      <element>http://localhost:8080</element>
+    </hostnames>
+    <ipad>False</ipad>
+    <tablets>False</tablets>
+  </settings>

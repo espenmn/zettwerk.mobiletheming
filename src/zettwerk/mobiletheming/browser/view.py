@@ -8,11 +8,9 @@ from urlparse import urlparse
 class MobRedirected(BrowserView):
 
     def __call__(self, request=None, ref='', url=''):
-        """Sends the user to the same page they were at before goint to mobile site."""
-        refpage = urlparse(ref)
-        redirect_to = refpage.path + '?' + refpage.params
-        import pdb; pdb.set_trace()
-        return redirect_to
+        """Sends the user to the same page they were at before going to mobile site."""
+        refpage = urlparse(url)
+        redirect_to = refpage.path + '?' + refpage.query
         return self.context.REQUEST.RESPONSE.redirect(redirect_to)
 
 
@@ -32,12 +30,13 @@ class JavaScript(BrowserView):
         hostname = self.hostname
         
         if self.fullurl and hostname:
-        	hostname += '/@@mobredirected'
+        	#this setting does not work, yet
+        	#hostname += '/@@mobredirected'
         	ref = urlparse(self.request.get_header("referer"))
-        	hostname  += ref.path 
+        	#force_path_and_query = ref.path 
         	#hostname += ref.params
-        	hostname  += '?'
-        	hostname  +=  ref.query
+        	#force_path_and_query  += '?'
+        	#force_path_and_query  +=  ref.query
         	#hostname += ref.fragment
         	
 

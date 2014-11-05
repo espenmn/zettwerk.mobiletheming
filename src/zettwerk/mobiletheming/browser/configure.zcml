@@ -19,6 +19,13 @@
       class=".view.JavaScript"
       permission="zope2.View"
       />
+      
+  <browser:page
+      name="mobredirected"
+      for="*"
+      class=".view.MobRedirected"
+      permission="zope2.View"
+      />
 
   <browser:page
       name="mobile-theming-controlpanel"

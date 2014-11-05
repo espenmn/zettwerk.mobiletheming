@@ -5,6 +5,17 @@ from plone.registry.interfaces import IRegistry
 from urlparse import urlparse
 
 
+class MobRedirected(BrowserView):
+
+    def __call__(self, request=None, ref='', url=''):
+        """Sends the user to the same page they were at before goint to mobile site."""
+        refpage = urlparse(ref)
+        redirect_to = refpage.path + '?' + refpage.params
+        import pdb; pdb.set_trace()
+        return redirect_to
+        return self.context.REQUEST.RESPONSE.redirect(redirect_to)
+
+
 class JavaScript(BrowserView):
 
     def __call__(self, request=None, response=None):
@@ -21,19 +32,19 @@ class JavaScript(BrowserView):
         hostname = self.hostname
         
         if self.fullurl and hostname:
+        	hostname += '/@@mobredirected'
         	ref = urlparse(self.request.get_header("referer"))
-        	
         	hostname  += ref.path 
         	#hostname += ref.params
         	hostname  += '?'
         	hostname  +=  ref.query
         	#hostname += ref.fragment
         	
+
+        	
         if not active and hostname:
             return """\
             var mobile_domain = "%(hostname)s";
-            var __referrer = ''
-            var referrer = ''
             var ipad = "%(ipad)s";
             var other_tablets = "%(tablets)s";
             document.write(unescape("%%3Cscript src='/++resource++zettwerk.mobiletheming.scripts/me.redirect.min.js' type='text/javascript'%%3E%%3C/script%%3E"));
@@ -77,8 +88,7 @@ class JavaScript(BrowserView):
     def tablets(self):
         return self.registry[
             'zettwerk.mobiletheming.interfaces.IMobileThemingSettings' \
-                '.tablets'
-        ]
+                '.tablets']
 
     @property
     def ipad(self):

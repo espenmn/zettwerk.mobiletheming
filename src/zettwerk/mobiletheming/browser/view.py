@@ -32,6 +32,8 @@ class JavaScript(BrowserView):
         if not active and hostname:
             return """\
             var mobile_domain = "%(hostname)s";
+            var __referrer = ''
+            var referrer = ''
             var ipad = "%(ipad)s";
             var other_tablets = "%(tablets)s";
             document.write(unescape("%%3Cscript src='/++resource++zettwerk.mobiletheming.scripts/me.redirect.min.js' type='text/javascript'%%3E%%3C/script%%3E"));

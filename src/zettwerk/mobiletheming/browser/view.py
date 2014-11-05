@@ -19,6 +19,16 @@ class JavaScript(BrowserView):
             ._getActive()
 
         hostname = self.hostname
+        
+        if self.fullurl and hostname:
+        	ref = urlparse(self.request.get_header("referer"))
+        	
+        	hostname  += ref.path 
+        	#hostname += ref.params
+        	hostname  += '?'
+        	hostname  +=  ref.query
+        	#hostname += ref.fragment
+        	
         if not active and hostname:
             return """\
             var mobile_domain = "%(hostname)s";
@@ -73,3 +83,9 @@ class JavaScript(BrowserView):
         return self.registry[
             'zettwerk.mobiletheming.interfaces.IMobileThemingSettings' \
                 '.ipad']
+
+    @property
+    def fullurl(self):
+        return self.registry[
+            'zettwerk.mobiletheming.interfaces.IMobileThemingSettings' \
+                '.fullurl']

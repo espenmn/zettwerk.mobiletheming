@@ -24,6 +24,12 @@ class IMobileThemingSettings(Interface):
         description=_('The name of the mobile theme.'),
         )
 
+    fullurl = schema.Bool(
+        title=_('fullurl', 'Redirect to full url'),
+        description=_('If set to true, it will redirect site.com/page to mobilesite/page.'),
+        default=False,
+        )
+
     ipad = schema.Bool(
         title=_('ipad', 'Redirect iPads'),
         description=_('Set to false to not redirect on iPad.'),

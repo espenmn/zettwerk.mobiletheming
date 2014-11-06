@@ -28,30 +28,31 @@ class JavaScript(BrowserView):
             ._getActive()
 
         hostname = self.hostname
+        force_path_and_query = ''
         
         if self.fullurl and hostname:
-        	#this setting does not work, yet
-        	#hostname += '/@@mobredirected'
+        	force_path_and_query += '/@@mobredirected/?url='
         	ref = urlparse(self.request.get_header("referer"))
-        	#force_path_and_query = ref.path 
-        	#hostname += ref.params
-        	#force_path_and_query  += '?'
-        	#force_path_and_query  +=  ref.query
-        	#hostname += ref.fragment
+        	force_path_and_query += ref.path 
         	
-
+        	if ref.query:
+        		force_path_and_query  += '?'
+        		force_path_and_query  +=  ref.query
+        	
         	
         if not active and hostname:
             return """\
             var mobile_domain = "%(hostname)s";
             var ipad = "%(ipad)s";
             var other_tablets = "%(tablets)s";
+            var force_path_and_query = "%(force_path_and_query)s";
             document.write(unescape("%%3Cscript src='/++resource++zettwerk.mobiletheming.scripts/me.redirect.min.js' type='text/javascript'%%3E%%3C/script%%3E"));
 
             """ % {
                 'hostname': hostname,
                 'ipad': self.ipad,
                 'tablets': self.tablets,
+                'force_path_and_query' : force_path_and_query,
             }
         return ''
 

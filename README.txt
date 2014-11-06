@@ -19,6 +19,7 @@ There is also some settings for "redirecting urls", it works like this:
 2) This javascript redirects urls to the url set in the control panel.
 3) Redirects works for mobile devices.
 4) You can choose if you want to redirect iPads and tablets, too.
+5) There is a setting
 
 See this example with the zettwerk.mobile theme: https://www.youtube.com/watch?v=Q2ID86XkiQQ
 

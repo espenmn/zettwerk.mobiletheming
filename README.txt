@@ -21,6 +21,8 @@ There is also some settings for "redirecting urls", it works like this:
 4) You can choose if you want to redirect iPads and tablets, too.
 5) There is a setting
 
+Note: If you enable ‘redirect full  URLs’, you might have to disable caching and/or merging in /portal_javascript. This depends on your theme/setup.
+
 See this example with the zettwerk.mobile theme: https://www.youtube.com/watch?v=Q2ID86XkiQQ
 
 

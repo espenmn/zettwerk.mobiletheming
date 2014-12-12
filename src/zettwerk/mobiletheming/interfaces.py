@@ -26,7 +26,9 @@ class IMobileThemingSettings(Interface):
 
     fullurl = schema.Bool(
         title=_('fullurl', 'Redirect to full url'),
-        description=_('If set to true, it will redirect site.com/page to mobilesite/page.'),
+        description=_("""If set to true, it will redirect site.com/page to mobilesite/page. 
+        	If you have problems with this setting, go to /portal_javascript and 
+        	disable caching and merging for mobile-redirect.js"""),
         default=False,
         )
 
